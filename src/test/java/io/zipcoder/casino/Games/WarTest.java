@@ -33,6 +33,14 @@ public class WarTest {
     }
 
     @Test
+    public void dealTest2() {
+        war.deal();
+        Integer actual = war.player2.currentHand.size();
+        Integer expected = 26;
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
     public void compareTest() {
         Card card1 = new Card(Rank.SEVEN, Suit.CLUBS);
         Card card2 = new Card(Rank.FIVE, Suit.DIAMOND);
@@ -47,9 +55,31 @@ public class WarTest {
     }
 
     @Test
+    public void compareTieTest() {
+        Card card1 = new Card(Rank.FIVE, Suit.CLUBS);
+        Card card2 = new Card(Rank.FIVE, Suit.DIAMOND);
+
+        war.player1.currentHand.add(card1);
+        war.compareCards(war.player1.currentHand.get(0), card2);
+
+        Integer expected = 0;
+        Integer actual = war.player1.getPoints();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
     public void awardPointsToWinnerTest() {
         war.player1.addPoint(1);
         Integer expected = 1;
+        Integer actual = war.player1.getPoints();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void awardPointsToWinnerTest2() {
+        war.player1.addPoint(1);
+        war.player1.addPoint(50);
+        Integer expected = 51;
         Integer actual = war.player1.getPoints();
         Assert.assertEquals(expected, actual);
     }
@@ -62,6 +92,16 @@ public class WarTest {
         String expected = "Winner is " + war.player1.getName();
         String actual = war.highestPoints();
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void displayWinnerTest2() {
+        war.player1.resetPoints();
+        war.player2.addPoint(200);
+
+        String expected = "Winner is " + war.player2.getName();
+        String actual = war.highestPoints();
+        Assert.assertEquals(expected, actual);
+
     }
 
     @Test
